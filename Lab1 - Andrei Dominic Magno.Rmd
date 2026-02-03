@@ -1,5 +1,7 @@
 ---
 title: "Lab 1: Introduction to R "
+author: "Andrei Dominic Magno"
+date: "2026-01-30"
 output:
   pdf_document: default
   word_document: default
@@ -102,11 +104,11 @@ sd(rolls.avgs)
 
 •	Is the mean closer to the value you would expect than the average you had in Task 1? Why?
 
-*[Put your answer here, in between the asterisks]*
+*Yes, the mean of 1000 simulations would be closer to the expected value because the sample mean would approaches the expected value with increasing simulation size. *
 
 •	How do you interpret the standard deviation in this problem?
 
-*[Put your answer here, in between the asterisks]*
+*The standard deviation describes how the 1000 experiments vary around the mean.*
 
 ## Task 3: Presenting tables in RMarkdown
 
@@ -115,7 +117,7 @@ Have R make 5 rolls of the tetrahedron die and repeat that 4 times. Present the 
 
 ## R Markdown
 
-The exact code is provided for you below. In this way you can cut-and-paste this code for table-making in future labs. Three parameters were added to the code chunk: The echo = FALSE parameter was addedto prevent printing of the R code that generated the table. The results='asis' parameter was added to have R present the results as is for the table generation. The warning=FALSE parameter suppresses warning messages from R that are often presented when loading packages.
+The exact code is provided for you below. In this way you can cut-and-paste this code for table-making in future labs. Three parameters were added to the code chunk: The echo = FALSE parameter was added to prevent printing of the R code that generated the table. The results='asis' parameter was added to have R present the results as is for the table generation. The warning=FALSE parameter suppresses warning messages from R that are often presented when loading packages.
 
 As an aside, a fourth common parameter is include=FALSE, which prevents R from printing output when running the code chunk.
 
@@ -139,7 +141,7 @@ pander(table)
 
 What do you observe across the replicates?
 
-*[Put your answer here, in between the asterisks]*
+*The rolls vary from 1-4 in each replicate, showing that there is no clear pattern.*
 
 ## Task 4: Presenting graphs in RMarkdown
 
@@ -171,7 +173,7 @@ hist(rolls.avgs, main="", xlab="Average of set of 10 rolls")
 
 ## The problem
 
-Let us add a normal approximation (bell curve) to the histogram. We will cover the normal distribution later in the course. But hopefully you recall it from your Statistics course! To add a density curve to the plot, need to change the y-axis to a ‘density’ scale. This is done by setting the parameter prob = TRUE. The curve function addes a curve to the plot. We will use a normal distribution with mean and standard deviation set at the values obtained in Task 2. Here is the code
+Let us add a normal approximation (bell curve) to the histogram. We will cover the normal distribution later in the course. But hopefully you recall it from your Statistics course! To add a density curve to the plot, need to change the y-axis to a ‘density’ scale. This is done by setting the parameter prob = TRUE. The curve function adds a curve to the plot. We will use a normal distribution with mean and standard deviation set at the values obtained in Task 2. Here is the code
 
 ```{r code }
 #hist(rolls.avgs, prob = T, main=“”, xlab=“Average of set of 10 rolls”) # histogram
@@ -181,18 +183,37 @@ Let us add a normal approximation (bell curve) to the histogram. We will cover t
 Add these to the code chunk to present a histogram with a normal approximation
 
 ```{r Task 4 code}
-# [Place coe here]
+# [Place code here]
+S = 1000 # number of simulation experiments performed
+# store results in a (1000-dimensional) vector called rolls.avgs
+rolls.avgs = vector(length=S)# setting up the variable rolls.avgs to store the average roll for each experiment
+# this for-loop steps the variable simnum through the sequence 1 to 1000,
+# repeating 1000 times the die rolling tasks inside the curly brackets {...}.
+
+for(simnum in 1:S){
+# Use our die rolling code from Task 1!
+x = 1:6 # sides of the die
+roll = sample(x, 5, replace = TRUE) # simulate a die roll
+rolls.avgs[simnum] = mean(roll) # store the average roll
+}
+# take a look at the first 6 simulation results
+head(rolls.avgs)
+# compute the mean of the 1000 experiments
+mean(rolls.avgs)
+hist(rolls.avgs, main="", xlab="Average of set of 10 rolls")
+hist(rolls.avgs, prob = TRUE, main="", xlab="Average of set of 10 rolls") # histogram
+curve(dnorm(x, mean=mean(rolls.avgs), sd=sd(rolls.avgs)), add=TRUE, col="green") # normal approximation
 ```
   
 ## Questions:
 
 •	Interpret the histogram–shape, skew, spread, center.
 
-*[Put your answer here, in between the asterisks]*
+*The histogram-shape has a bell-shaped curve, symmetrically skewed, and the center is approximately 3 which is the expected average. The spread is moderate, where most averages fall near the center and the extreme cases are on the edges.*
 
 •	Does this follow what you would expect to see?
 
-*[Put your answer here, in between the asterisks]*
+*Yes, the distribution of sample averages tend to be normal and centered at the expected value as the number of simulations increases.*
 
 ## Task 5: Boolean expressions
 
@@ -229,39 +250,52 @@ six
 ## The problems
 
 First problem
-How often in 5 rolls of a tetrahedron die is a two rolled?
+How often in 5 rolls of a die is a two rolled?
 
 ```{r Task 5 code}
-# [Place coe here]
+# [Place code here]
+x = 1:6  # 6-sided die
+rolls = sample(x, 5, replace = TRUE)  # roll the die five times
+# Boolean expression: how often is the roll EXACTLY 6, use double-equals sign
+sum(rolls == 2) 
 ```
 
 ## Questions:
 
 •	Run the code multiple times. What values do you get?
 
-*[Put your answer here, in between the asterisks]*
+*After running it 5 times, I gained the values {0,0,1,1,2}.*
 
 •	Are the values different? Is that what you expect?
 
-*[Put your answer here, in between the asterisks]*
+*The values are different which is expected because since each set of fives rolls is random, the number of times a 2 appears can change from each roll.*
 
 Second problem
 This is heading towards a probability calculation. Roll the tetrahedron die 5 times and repeat this experiment 1000 times as in Task 2. Report the proportion of 1000 simulations where a two occurred. (This derives from Dobrow problem 1.44: Probability of rolling at least one 2 in five rolls of a tetrahedron die.)
 Dobrow problem 1.30: Exact answer is 0.7627
 
 ```{r Task 5 code part 2}
-# [Place coe here]
+# [Place code here]
+count = 0 # start a counter for number of times at least one six shows in 5 rolls
+S = 1000 # number of experiments
+# for-loop to repeat die rolling experiment 1000 times
+for(simnum in 1:S){
+  x = 1:4 # 4-sided die
+    roll = sample(x, 5, replace = TRUE) # roll the die five times
+    count = count + (sum(roll==2)>0)  # Boolean computation: add one to the counter only if at least one 6 shows.
+}
+count/S
 ```
 
 ## Questions:
 
 •	Is the value you get close to the truth (0.7627)?
 
-*[Put your answer here, in between the asterisks]*
+*Yes, the value I got was close to the truth.*
 
-•	How can we modify the simulation experiement to get a value even close to the truth?
+•	How can we modify the simulation experiment to get a value even close to the truth?
 
-*[Put your answer here, in between the asterisks]*
+*We could increase the number of experiments to get a value even closer to the truth.*
 
 ## Task 6: Finalize your output for submitting to Canvas
 
