@@ -1,0 +1,31 @@
+---
+title: "R coding Assignment 2"
+author: "Andrei Dominic Magno"
+date: "2026-02-06"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Make up a problem/scenario that has something you want to sample from. Then you will create code for the sample.
+
+SCENARIO: You just woke up and need to decide what to eat for breakfast. You randomly sample 1000 times from a pool of 15 breakfast food options.
+
+```{r Random Breakfast Foods}
+  breakfast_choices = c("Scrambled Eggs", "Blueberry Pancakes", "Greek Yogurt Parfait","Avocado Toast", "Steel-Cut Oatmeal", "Belgian Waffles", "Breakfast Burrito",
+  "Eggs Benedict", "French Toast", "Smoked Salmon Bagel", "Chia Seed Pudding", "Hash Browns", "Smoothie Bowl", "Cottage Cheese with Fruit", "Shakshuka")  # 15 Breakfast Foods
+  breakfast_random <- vector(length = 1000)
+for(i in 1:1000){
+  breakfast_random[i] = sample(breakfast_choices, 1, replace = TRUE)
+}
+breakfast_rand_table <- table(breakfast_random)
+most_common <- names(breakfast_rand_table)[which.max(breakfast_rand_table)]
+max_count <- max(breakfast_rand_table)
+
+print(breakfast_rand_table)
+cat("Based on 1,000 random samples of breakfast choices, I will eat", most_common, "because it was selected", max_count, "times.\n")
+```
