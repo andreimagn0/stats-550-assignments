@@ -1,0 +1,65 @@
+---
+title: 'Homework #6 1.9'
+author: "Andrei Dominic Magno"
+date: "2026-02-09"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Homework 4
+1.41 Modify the code in the R script CoinFlip.R to simulate the probability of getting exactly
+one head in four coin tosses.
+
+```{r one head in four coin tosses}
+#coinFlip.R
+
+n <- 10000
+simlist <- numeric(n)
+for (i in 1:n) {
+  trial <- sample(0:1, 4, replace = TRUE)  # 4 coin tosses
+  success <- if (sum(trial) == 1) 1 else 0 # exactly one head
+  simlist[i] <- success
+}
+
+mean(simlist)
+```
+
+
+1.43 Use R to simulate the probability of getting at least 8 in the sum of two dice rolls.
+```{r at least 8 in the sum of two dice rolls}
+
+n <- 10000
+simlist <- numeric(n)
+for (i in 1:n) {
+  trial <- sample(1:6, 2, replace = TRUE)  # two dice rolls
+  success <- if (sum(trial) >= 8) 1 else 0 #at least 8
+  simlist[i] <- success
+}
+
+mean(simlist)
+```
+
+1.57
+Judith has a penny, nickel, dime, and quarter in her pocket. So does Kory. They both reach into
+their pockets and choose a coin. Let upper X be the greater (in cents) of the two.
+Assume that coin selections are equally likely.
+Simulate to find the probability that Judith's coin is worth more than Kory's? (It is not 1 slash 2
+period)
+```{r probability judith > kory}
+
+n <- 10000
+simlist <- numeric(n)
+
+coins <- c(1,5,10,25) 
+for (i in 1:n) {
+  judith <- sample(coins, 1)  #judith's pocket
+  kory <- sample(coins, 1) #kory's pocket
+  success <- if (judith > kory) 1 else 0 
+  simlist[i] <- success
+}
+
+mean(simlist)
+```

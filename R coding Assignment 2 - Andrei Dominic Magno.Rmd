@@ -3,8 +3,8 @@ title: "R coding Assignment 2"
 author: "Andrei Dominic Magno"
 date: "2026-02-06"
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
