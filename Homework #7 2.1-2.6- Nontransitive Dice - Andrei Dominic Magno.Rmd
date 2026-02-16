@@ -1,0 +1,88 @@
+---
+title: "Homework #7 2.1-2.6: Nontransitive Dice"
+author: "Andrei Dominic Magno"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Simulate in Rstudio the nontransitive dice probabilities in Exercise 2.6. Upload a file with your code and output.
+
+Reference: (Consider three nonstandard dice. Instead of the numbers
+1 through 6, die A has two 3’s, two 5’s, and two 7’s; die B has two
+2’s, two 4’s, and two 9’s; and die C has two 1’s, two 6’s, and two 8’s, as in
+Figure 2.8.
+
+Suppose dice A and B are rolled. Show that A is more likely to get the higher
+number. That is, P(A > B) > 0.50, where {A > B} denotes the event that
+A beats B. Hint: Condition on the outcome of die A.
+Now show that if B and C are rolled, B is more likely to get the higher number.
+And, remarkably, if C and A are rolled, C is more likely to get the higher
+number.
+
+```{r Nontransitive Dice; A beats B}
+#A beats B
+die_A <- c(3, 3, 5, 5, 7, 7)
+die_B <- c(2, 2, 4, 4, 9, 9)
+
+sim_A_greater_B = function()
+{
+num_A = sample(die_A, 1, replace = TRUE)
+num_B = sample(die_B, 1, replace = TRUE)
+
+if (num_A > num_B) 1 else 0
+}
+
+simlist = replicate(10000, sim_A_greater_B())
+mean(simlist)
+```
+```{r Nontransitive Dice; B beats C}
+#B beats C
+die_B <- c(2, 2, 4, 4, 9, 9)
+die_C <- c(1, 1, 6, 6, 8, 8)
+
+sim_B_greater_C = function()
+{
+num_B = sample(die_B, 1, replace = TRUE)
+num_C = sample(die_C, 1, replace = TRUE)
+
+if (num_B > num_C) 1 else 0
+}
+
+simlist = replicate(10000, sim_B_greater_C())
+mean(simlist)
+```
+
+```{r Nontransitive Dice; C beats A}
+#C beats A
+die_A <- c(3, 3, 5, 5, 7, 7)
+die_C <- c(1, 1, 6, 6, 8, 8)
+
+sim_C_greater_A = function()
+{
+num_C = sample(die_C, 1, replace = TRUE)
+num_A = sample(die_A, 1, replace = TRUE)
+
+if (num_C > num_A) 1 else 0
+}
+
+simlist = replicate(10000, sim_C_greater_A())
+mean(simlist)
+```
+
+
+Many relationships in life are transitive. For instance, if Amy is taller than
+Ben and Ben is taller than Charlie, then Amy is taller than Charlie. But
+these dice show that the relation “more likely to roll a higher number” is not
+transitive.
+
+The dice are the basis of a magic trick. You pick any die. Then I can always
+pick a die that is more likely to beat yours. If you pick A, I pick C. If you pick
+B, I pick A. And if you pick C, I pick B.)
+
+
