@@ -1,0 +1,31 @@
+---
+title: 'Homework #8: Q15'
+author: "Andrei Dominic Magno"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Play the dice game described in exercise 4.3 multiple times. Estimate both the expected value and variance of your earnings.
+For reference: Exercise 4.3 The following dice game costs $10 to play. Let W be your winnings from the game. If you roll 1, 2, or 3, you lose your money (W = –10). If you roll 4 or 5, you get your money back (W = 0). If you roll a 6, you receive $24 (W = 14).
+Find the distribution of your winnings upper W.
+Find the expected value of the game.
+
+Use R to simulate and estimate the expected value and the variance for the winnings of this game.
+Upload your code and output here.
+
+```{r}
+n <- 1000000
+trials <- sample(1:6, size = n, replace = TRUE)
+
+W <- ifelse(trials %in% c(1,2,3), -10,
+     ifelse(trials %in% c(4,5), 0, 14))
+
+expected_value <- mean(W)
+variance <- var(W)
+
+cat("Expected Value:", expected_value, "\n")
+cat("Variance:", variance, "\n")
+```
+

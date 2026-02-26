@@ -1,0 +1,37 @@
+---
+title: 'Homework #8: Q14'
+author: "Andrei Dominic Magno"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+A bag contains one red, two blue, three green, and four yellow balls. A sample of three balls is taken without replacement. Let upper B be the number of blue balls and Y the number of yellow balls in the sample.
+Simulate the mean and variance of the total number of blue and yellow balls in the sample.
+Upload a your code and output here.
+
+```{r}
+bag <- c(rep("R", 1),
+         rep("B", 2),
+         rep("G", 3),
+         rep("Y", 4))
+
+n <- 1000000
+
+# Store totals
+totals <- numeric(n)
+
+for (i in 1:n) {
+  trial <- sample(bag, size = 3, replace = FALSE)
+  totals[i] <- sum(trial %in% c("B", "Y"))
+}
+
+# Calculate mean and variance
+simMean <- mean(totals)
+simVar <- var(totals)
+
+cat("Mean:", simMean, "\n")
+cat("Variance:", simVar, "\n")
+```
+
