@@ -1,0 +1,43 @@
+---
+title: 'Homework #9 Q6'
+author: "Andrei Dominic Magno"
+date: "`r Sys.Date()`"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+When two dice are tossed, let A be the event where the first die shows 1, 2, or 3, and B be the event where the first die shows 3, 4, or 5. Let C represent the event where the dice sum up to 9. Demonstrate that the probability of A, B, and C happening simultaneously equals the product of their individual probabilities, but no pair of these events is independent. Upload a your code and your output.
+
+```{r Q6}
+n <- 10000
+
+die1 <- sample(1:6, n, replace=TRUE)
+die2 <- sample(1:6, n, replace=TRUE)
+
+A <- die1 %in% c(1,2,3)
+B <- die1 %in% c(3,4,5)
+C <- (die1 + die2) == 9
+
+P_A  <- mean(A)
+P_B  <- mean(B)
+P_C  <- mean(C)
+
+P_AB  <- mean(A & B)
+P_AC  <- mean(A & C)
+P_BC  <- mean(B & C)
+P_ABC <- mean(A & B & C)
+
+cat("P(A∩B∩C) =", P_ABC, "\n")
+cat("P(A)P(B)P(C) =", P_A*P_B*P_C, "\n\n")
+ 
+cat("P(A∩B) =", P_AB, " vs ", P_A*P_B, "\n")
+cat("P(A∩C) =", P_AC, " vs ", P_A*P_C, "\n")
+cat("P(B∩C) =", P_BC, " vs ", P_B*P_C, "\n") 
+```
+
