@@ -1,0 +1,111 @@
+---
+title: "R coding Assignment 4 - Andrei Dominic Magno"
+author: "Andrei Dominic Magno"
+date: "`r Sys.Date()`"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+R coding Assignment 4
+
+1. Traffic accidents at a particular intersection follow Poisson distribution with an
+average rate of 1.4 per week.
+a) What is the probability that the next week is accident-free?
+b) What is the probability that there will be exactly 3 accidents next week?
+c) What is the probability that there will be at most 2 accidents next week?
+d) What is the probability that there will be at least 2 accidents during the next
+two weeks?
+e) What is the probability that there will be exactly 5 accidents during the next
+four weeks?
+f) What is the probability that there will be exactly 2 accidents tomorrow?
+g) What is the probability that the next accident will not occur for three days?
+
+``` {r Q1}
+m <- 1.4
+cat("a) The probability that the next week is accident-free is", dpois(0, m), "\n")
+cat("b) The probability that there will be exactly 3 accidents next week is", dpois(3, m), "\n")
+cat("c) The probability that there will be at most 2 accidents next week is", ppois(2, m), "\n")
+cat("d) The probability that there will be at least 2 accidents during the next two weeks is", 1 - ppois(2 - 1, m * 2), "\n")
+cat("e) The probability that there will be exactly 5 accidents during the next four weeks is", dpois(5, m * 4), "\n")
+cat("f) The probability that there will be exactly 2 accidents tomorrow is", dpois(2, m/7), "\n")
+cat("g) The probability that the next accident will not occur for three days is", dpois(0, (m/7 * 3)), "\n")
+
+```
+
+2. In Major League Baseball’s Home Run Derby, each contestant is allowed to
+keep swinging the bat until they have made 10 “outs”. (An “out” is anything that
+is not a home run.) If Barry Bonds has a 70% chance of hitting a home run on
+any given swing, what is the probability that he hits at least 10 home runs
+before his turn is up?
+
+``` {r Q2}
+p <- 0.7
+outs <- 10
+cat("The probability that he hits at least 10 home runs before his turn is up is", 1 - pnbinom(9, 10, 1-p), "\n")
+```
+
+3. A quarterback completes 44% of his passes. We want to observe this
+quarterback during one game to see how many pass attempts he makes before
+completing one pass.
+A. What is the probability that the quarterback throws 3 incomplete passes before
+he has a completion?
+B. Determine the probability that it takes more than 5 attempts before he completes
+a pass.
+
+``` {r Q3}
+p <- 0.44
+cat("A) The probability that the quarterback throws 3 incomplete passes before he has a completion is", dgeom(3, p), "\n")
+cat("B) The probability that it takes more than 5 attempts before he completes a pass is", 1 - pgeom(4, p), "\n")
+```
+
+4. Suppose a telemarketer has a 15% chance of making a sale on any given
+phone call. He is required to make 10 successful sales before leaving for the
+day. What is the probability that he needs to make more than 40 calls?
+
+``` {r Q4}
+p <- 0.15
+cat("The probability that he needs to make more than 40 calls is", 1- pnbinom(40 - 10, 10, p))
+```
+
+5. A company (the producer) supplies microprocessors to a manufacturer (the
+consumer) of electronic equipment. The microprocessors are supplied in batches
+of 50. The consumer regards a batch as acceptable provided that there are not
+more than 5 defective microprocessors in the batch. Rather than test all of the
+microprocessors in the batch, 10 are selected at random and tested.
+A. Find the probability that out of a sample of 10, d = 0, 1, 2, 3, 4, 5 are
+defective when there are actually 5 defective microprocessors in the batch.
+B. Suppose that the consumer will accept the batch provided that not more than
+m=2 defectives are found in the sample of 10.
+  i. Find the probability that the batch is accepted when there are 5
+defectives in the batch.
+  ii. Find the probability that the batch is rejected when there are 3
+defectives in the batch.
+
+``` {r Q5}
+N <- 50
+n <- 10
+cat("A) The probability that out of a sample of 10, d = 0, 1, 2, 3, 4, 5 are defective when there are actually 5 defective microprocessors in the batch is: \n")
+cat("P(X=0):", dhyper(0, 5, 45, 10), "\n")
+cat("P(X=1):", dhyper(1, 5, 45, 10), "\n")
+cat("P(X=2):", dhyper(2, 5, 45, 10), "\n")
+cat("P(X=3):", dhyper(3, 5, 45, 10), "\n")
+cat("P(X=4):", dhyper(4, 5, 45, 10), "\n")
+cat("P(X=5):", dhyper(5, 5, 45, 10), "\n")
+cat("Bi) the probability that the batch is accepted when there are 5 defectives in the batch", phyper(2, 5, 45, 10), "\n")
+cat("Bii) the probability that the batch is accepted when there are 3 defectives in the batch", 1 - phyper(2, 3, 47, 10), "\n")
+```
+
+
+6. In a certain town, 40% of the eligible voters prefer candidate A, 10% prefer
+candidate B, and the remaining 50% have no preference. You randomly sample
+10 eligible voters. What is the probability that 4 will prefer candidate A, 1 will
+prefer candidate B, and the remaining 5 will have no preference?
+
+``` {r Q6}
+cat("The probability that 4 will prefer candidate A, 1 will prefer candidate B, and the remaining 5 will have no preference is", dmultinom(c(4,1,5), prob = c(0.4,0.1,0.5)))
+```

@@ -1,0 +1,46 @@
+---
+title: 'R Coding Assignment #3'
+author: "Andrei Dominic Magno"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. If 10% of people who are given a certain drug experience Dizziness, find these
+probabilities using R code for a sample of 25 people who take the drug.
+A. Exactly 3 people will become dizzy
+B. At least 9 people will become dizzy.
+C. Less than 7 people will become dizzy.
+
+``` {r Q1a}
+p <- 0.1
+n <- 25
+
+cat("The probability that exactly 3 people will become dizzy is",dbinom(3, n, p), "\n")
+cat("The probability that at least 9 people will become dizzy is", 1 - pbinom(8, n, p), "\n")
+cat("The probability that less than 7 people will become dizzy is", pbinom(6, n, p), "\n")
+
+```
+
+2. There were ten green bottles sitting on the wall. The probability of a green bottle
+accidentally falling is 0.95. What is the probability that fewer than 8 of the green
+bottles accidentally fall?
+
+``` {r Q2}
+p <- 0.95
+n <- 10
+cat("The probability that fewer than 8 of the green bottles accidentally fall is", pbinom(7, n, p), "\n")
+```
+
+3. The LMB Company manufactures tires. They claim that only .007 of LMB tires
+are defective. What is the probability of finding 2 defective tires in a random
+sample of 50 LMB tires?
+
+``` {r Q3}
+p <- 0.007
+n <- 50
+cat("The probability of finding 2 defective tires in a random sample of 50 LMB tires is",dbinom(2, n, p), "\n")
+```
