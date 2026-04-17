@@ -1,0 +1,65 @@
+---
+title: "R Coding Assignment 5"
+author: "Andrei Dominic Magno"
+date: "`r Sys.Date()`"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+R Coding Assignment 5
+
+1. Birth weights of babies in the United States can be modeled by a normal distribution with mean 3250 grams and standard deviation 550 grams. 
+Those weighing less than 2500 grams are considered to be of low birth weight.
+
+A. What proportion of babies would the normal distribution predict as weighing
+more than 10 pounds (4536 grams) at birth? You should always start with a
+sketch of the area that you are looking for!
+B. Determine the probability that a randomly selected baby weighs between 3000
+and 4000 grams at birth.
+C. How little would a baby have to weigh to be among the lightest 2.5% of all
+newborns?
+D. How much would a baby have to weigh to be among the heaviest 10% of all
+newborns?
+
+``` {r Q1}
+cat("A) The proportion of babies that the normal distribution would predict as weighing more than 10 pounds (4536 grams) at birth is", round(1 - pnorm(4536, 3250, 550), 4), '\n')
+cat("B) The probability that a randomly selected baby weighs between 3000 and 4000 grams at birth is", round(pnorm(4000, 3250, 550) - (pnorm(3000, 3250, 550)), 4), '\n')
+cat("C) A baby have to weigh",qnorm(0.025, 3250, 550),"grams to be among the lightest 2.5% of all newborns", '\n')
+cat("D) a baby have to weigh", round(qnorm(0.9, 3250, 550), 2), "grams to be among the heaviest 10% of all newborns", '\n')
+```
+
+2. The weekly salaries of teachers in one state are normally distributed with a mean of
+$490 and a standard deviation of $45. What is the probability that a randomly
+selected teacher earns more than $525 a week?
+
+``` {r Q2}
+cat("The probability that a randomly selected teacher earns more than $525 a week is", round(1 - pnorm(525, 490, 45), 4), '\n')
+```
+
+3. The number of days ahead travelers purchase their airline tickets can be modeled
+by an exponential distribution with the average amount of time equal to 15 days.
+Find the probability that a traveler will purchase a ticket fewer than ten days in
+advance.
+
+``` {r Q3}
+lambda = 1 / 15
+cat("The probability that a traveler will purchase a ticket fewer than ten days in advance is", round(pexp(10, lambda), 4), '\n')
+```
+
+
+4. Packages have a nominal net weight of 1000 g. However their actual net weights have a
+uniform distribution over the interval 980 g to 1030 g.
+(a) Find the probability that the net weight of a package is less than 1000 g.
+(b) Find the probability that the net weight of a package is less than w g, where
+990 < w < 1030.
+
+``` {r Q4}
+cat("A) The probability that the net weight of a package is less than 1000 g is", round(punif(1000, 980, 1030), 2), '\n')
+cat("B) The probability that the net weight of a package is less than w g, where 990 < w < 1030 is, 'P(X < w) = (w - 980) / 50' \n")
+cat("   For example, if w = 1000, the probability is", (1000 - 980) / 50, '\n')
+```
